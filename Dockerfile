@@ -111,7 +111,7 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      cd /tmp                                                                                               && \ 
      git clone -b tune https://github.com/coinut7/yafu.git                                                 && \ 
      cd /tmp/yafu                                                                                          && \ 
-     make yafu USE_AVX2=1 USE_SSE41=1 NFS=1 CC=gcc 
+     make yafu NFS=1 USE_SSE41=1 USE_AVX2=1
 
 #Copy yafu ini file
 COPY docker/yafu.ini /tmp/yafu
