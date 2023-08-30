@@ -38,7 +38,7 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11 && \
 WORKDIR /tmp
 
 #Build variable
-ARG BUILDTHREADS=8
+ARG BUILDTHREADS=64
 
 #Copy all dependencies of YAFU
 #Note: the repository for this code can be found here: https://sourceforge.net/p/msieve/code/HEAD/tree/trunk/
