@@ -109,7 +109,7 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      make install                                                                                          && \
      #Build YAFU
      cd /tmp                                                                                               && \ 
-     git clone https://github.com/coinut7/ysieve.git                                                       && \ 
+     git clone -b tune https://github.com/coinut7/yafu.git                                                 && \ 
      cd /tmp/yafu                                                                                          && \ 
      make yafu NFS=1 USE_SSE41=1 USE_AVX2=1
 
