@@ -61,6 +61,7 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      git clone https://gitlab.inria.fr/zimmerma/ecm.git                                                    && \
      cd ecm                                                                                                && \
      git checkout master                                                                                   && \
+     libtoolize                                                                                            && \
      autoreconf -i                                                                                         && \
      ls /usr/local/lib                                                                                     && \
      ls /usr/local/include                                                                                 && \
