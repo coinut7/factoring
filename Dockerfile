@@ -7,6 +7,7 @@ RUN apt update &&                                        \
     add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
     apt update &&                                        \
     apt install -y                                       \
+    m4                                                        \
     g++-11                                                    \
     gcc-11                                                    \
     cmake                                                     \
@@ -88,12 +89,12 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      make all NO_ZLIB=1 ECM=1                                                                              && \
      #Build ytools
      cd /tmp                                                                                               && \
-     git clone https://github.com/bbuhrow/ytools.git                                                       && \
+     git clone https://github.com/coinut7/ytools.git                                                       && \
      cd /tmp/ytools                                                                                        && \
      make -j $BUILDTHREADS  CC=gcc-11 CPP=g++-11 CXX=g++-11 LD=g++-11                                      && \
      #Build ysieve
      cd /tmp                                                                                               && \
-     git clone https://github.com/bbuhrow/ysieve.git                                                       && \
+     git clone https://github.com/coinut7/ysieve.git                                                       && \
      cd /tmp/ysieve                                                                                        && \
      make -j $BUILDTHREADS                                                                                 && \
      #Install mpir
@@ -107,10 +108,9 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      make install                                                                                          && \
      #Build YAFU
      cd /tmp                                                                                               && \ 
-     git clone https://github.com/bbuhrow/yafu.git                                                         && \ 
+     git clone -b tune https://github.com/coinut7/yafu.git                                                 && \ 
      cd /tmp/yafu                                                                                          && \ 
-     git checkout ecfeb34c87222e7becf4829e22f4899f7dd5bfc7                                                 && \
-     make yafu NFS=1
+     make yafu NFS=1 USE_AVX2=1
 
 #Copy yafu ini file
 COPY docker/yafu.ini /tmp/yafu
