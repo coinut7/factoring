@@ -38,7 +38,7 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11 && \
 WORKDIR /tmp
 
 #Build variable
-ARG BUILDTHREADS=64
+ARG BUILDTHREADS=8
 
 #Copy all dependencies of YAFU
 #Note: the repository for this code can be found here: https://sourceforge.net/p/msieve/code/HEAD/tree/trunk/
@@ -51,7 +51,7 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      autoreconf -i                                                                                         && \
      find . -type f -exec touch {} +                                                                       && \
      chmod +x ./mpn/m4-ccas                                                                                && \
-     ./configure --enable-cxx                                                                              && \
+     ./configure --enable-cxx CFLAGS=-g mtune=znver2 march=znver2 OPT_FLAGS=-O3                            && \
      make    -j $BUILDTHREADS                                                                              && \
      make install                                                                                          && \
      mkdir -p /users/buhrow/src/c/gmp_install/gmp-6.2.0/lib                                                && \            
@@ -66,10 +66,11 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      ls /usr/local/lib                                                                                     && \
      ls /usr/local/include                                                                                 && \
      touch configure                                                                                       && \
-     ./configure --with-gmp=/usr/local/                                                                    && \
-     make  -j $BUILDTHREADS                                                                                && \
+     ./configure --with-gmp=/usr/local/ CFLAGS=-g mtune=znver2 march=znver2 OPT_FLAGS=-O3                  && \
+     make                                                                                                  && \
      make check                                                                                            && \
-     make -j $BUILDTHREADS                                                                                 && \
+     make ecm-params; make                                                                                 && \
+     make check
      make install                                                                                          && \
      cd /tmp                                                                                               && \
      mv ecm gmp-ecm                                                                                        && \
@@ -92,26 +93,26 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      cd /tmp                                                                                               && \
      git clone https://github.com/coinut7/ytools.git                                                       && \
      cd /tmp/ytools                                                                                        && \
-     make -j $BUILDTHREADS  CC=gcc-11 CPP=g++-11 CXX=g++-11 LD=g++-11                                      && \
+     make USE_AVX2=1 -j $BUILDTHREADS  CC=gcc-11 CPP=g++-11 CXX=g++-11 LD=g++-11                           && \
      #Build ysieve
      cd /tmp                                                                                               && \
      git clone https://github.com/coinut7/ysieve.git                                                       && \
      cd /tmp/ysieve                                                                                        && \
-     make -j $BUILDTHREADS                                                                                 && \
+     make USE_AVX2=1 -j $BUILDTHREADS                                                                      && \
      #Install mpir
      cd /tmp                                                                                               && \
      git clone https://github.com/wbhart/mpir.git                                                          && \
      cd mpir                                                                                               && \
      ./autogen.sh                                                                                          && \
      touch configure                                                                                       && \
-     ./configure                                                                                           && \
+     ./configure CFLAGS= mtune=znver2 march=znver2 OPT_FLAGS=-O3                                           && \
      make                                                                                                  && \
      make install                                                                                          && \
      #Build YAFU
      cd /tmp                                                                                               && \ 
      git clone -b tune https://github.com/coinut7/yafu.git                                                 && \ 
      cd /tmp/yafu                                                                                          && \ 
-     make yafu NFS=1 USE_SSE41=1 USE_AVX2=1
+     make NFS=1 USE_AVX2=1 USE_BMI2=1
 
 #Copy yafu ini file
 COPY docker/yafu.ini /tmp/yafu
