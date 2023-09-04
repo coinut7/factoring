@@ -70,7 +70,7 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      make                                                                                                  && \
      make check                                                                                            && \
      make ecm-params; make                                                                                 && \
-     make check
+     make check                                                                                            && \
      make install                                                                                          && \
      cd /tmp                                                                                               && \
      mv ecm gmp-ecm                                                                                        && \
