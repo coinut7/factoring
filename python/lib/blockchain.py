@@ -274,7 +274,7 @@ class CBlock(ctypes.Structure):
         print("Standard Deviation:", std , " Seconds. ", std/60, " Mins." )
         print("      Yafu Timeout:","avg + 0*std ~ ", timeout, "Seconds or ", timeout//60, "minutes", timeout%60, "Seconds."  )
 
-
+	
 
         for nonce in Seeds:
             start = time()
