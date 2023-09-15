@@ -82,7 +82,7 @@ def msieve_factor_driver(n):
   os.system("rm %d.dat" % n)
   return tmp
 
-  def yafu_factor_driver(n, timeout = 60*30):
+def yafu_factor_driver(n, timeout = 60*30):
   global YAFU_BIN
   print("[*] Factoring %d with yafu..." % n)
   import subprocess, re, os
