@@ -114,13 +114,13 @@ RUN  wget https://github.com/FACT0RN/GMP/releases/download/release_6.2.1/gmp-6.2
      cd /tmp/yafu                                                                                          && \ 
      make NFS=1 USE_AVX2=1 USE_BMI2=1
      #Build CADO
-     cd /tmp                                                                                               && \ 
-     git clone https://github.com/cado-nfs/cado-nfs.git                                                    && \ 
-     cd /tmp/cado-nfs                                                                                      && \ 
-     git checkout f084a550a9fc7a9f6879b32b3e83c1b8b8b5adc1                                                 && \ 
-     make                                                                                                  && \ 
-     cd /tmp/cado-nfs/build/s1/misc                                                                        && \ 
-     make convert_poly
+     #cd /tmp                                                                                               && \ 
+     #git clone https://github.com/cado-nfs/cado-nfs.git                                                    && \ 
+     #cd /tmp/cado-nfs                                                                                      && \ 
+     #git checkout f084a550a9fc7a9f6879b32b3e83c1b8b8b5adc1                                                 && \ 
+     #make                                                                                                  && \ 
+     #cd /tmp/cado-nfs/build/s1/misc                                                                        && \ 
+     #make convert_poly
      
 #Copy yafu ini file
 COPY docker/yafu.ini /tmp/yafu
@@ -193,7 +193,7 @@ COPY --from=builder /tmp/yafu/libyecm.a                    /tmp/yafu/libyecm.a
 COPY --from=builder /tmp/yafu/libynfs.a                    /tmp/yafu/libynfs.a
 COPY --from=builder /tmp/yafu/libysiqs.a                   /tmp/yafu/libysiqs.a  
 COPY --from=builder /tmp/yafu/yafu                         /tmp/yafu/yafu  
-COPY --from=builder /tmp/cado-nfs                          /tmp/cado-nfs
+#COPY --from=builder /tmp/cado-nfs                          /tmp/cado-nfs
 
 #Copy yafu ini file
 COPY docker/yafu.ini /tmp/yafu
@@ -202,7 +202,7 @@ COPY docker/yafu.ini /tmp/factoring/python
 ENV OMP_PROC_BIND="TRUE"
 ENV MSIEVE_BIN="/tmp/ggnfs-bin"
 ENV YAFU_BIN="/tmp/yafu/yafu"
-ENV CADO_BIN="/tmp/cado-nfs"
+#ENV CADO_BIN="/tmp/cado-nfs"
 
 WORKDIR /tmp/factoring/python
 
